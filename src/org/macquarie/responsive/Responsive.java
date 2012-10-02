@@ -1,27 +1,27 @@
 /**
- * This file is part of a project entitled Wk8ResponsiveInterrupt which is
- * provided as sample code for the following Macquarie University unit of study:
+ * This file is part of a project entitled Wk8Responsive which is provided as
+ * sample code for the following Macquarie University unit of study:
  * 
  * COMP229 "Object Oriented Programming Practices"
  * 
- * Copyright (c) 2011 Dominic Verity and Macquarie University.
+ * Copyright (c) 2011-2012 Dominic Verity and Macquarie University.
  * 
- * Wk8ResponsiveInterrupt is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the License,
- * or (at your option) any later version.
+ * Wk8Responsive is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
  * 
- * Wk8ResponsiveInterrupt is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
- * for more details.
+ * Wk8Responsive is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with Wk8ResponsiveInterrupt. (See files COPYING and COPYING.LESSER.) If
- * not, see <http://www.gnu.org/licenses/>.
+ * along with Wk8Responsive. (See files COPYING and COPYING.LESSER.) If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 
-package org.macquarie.responsive.interrupt;
+package org.macquarie.responsive;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -35,11 +35,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
-public class ResponsiveInterrupt extends JFrame implements ActionListener {
+public class Responsive extends JFrame implements ActionListener {
 
 	private static final int CIRCLE_DIAMETER = 30;
 
-	private static ResponsiveInterrupt mApplication;
+	private static Responsive mApplication;
 
 	private JPanel mContentPane = null;
 	private JButton mButton = null;
@@ -48,13 +48,13 @@ public class ResponsiveInterrupt extends JFrame implements ActionListener {
 
 	/**
 	 * Start the application by creating an application
-	 * object and running its {@link ResponsiveInterrupt#initApp()}
+	 * object and running its {@link Responsive#initApp()}
 	 * method in the event dispatch thread.
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		mApplication = new ResponsiveInterrupt();
+		mApplication = new Responsive();
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -64,7 +64,7 @@ public class ResponsiveInterrupt extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Setup the GUI by calling {@link ResponsiveInterrupt#setup()}
+	 * Setup the GUI by calling {@link Responsive#setup()}
 	 * and start it running by making it visible.
 	 */
 	private void initApp() {
@@ -80,7 +80,7 @@ public class ResponsiveInterrupt extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void setup() {
-		setTitle("Non-ResponsiveInterrupt");
+		setTitle("ResponsiveTest");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		mButton = new JButton("Start");
@@ -103,12 +103,26 @@ public class ResponsiveInterrupt extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (mDrawingThread != null)
-			mDrawingThread.interrupt();
+			mDrawingThread.stopTrucking();
 		mDrawingThread = new CircleDrawingThread();
 		mDrawingThread.start();
 	}
 
 	private class CircleDrawingThread extends Thread {
+		
+		/**
+		 * The thread continues running for a long as thus variable
+		 * remains true.
+		 */
+		private boolean mTrucking = true;
+		
+		/**
+		 * This method notifies the thread code that it should clean
+		 * itself up and terminate gracefully.
+		 */
+		protected void stopTrucking() {
+			mTrucking = false;
+		}
 		
 		/**
 		 * This is the "body of the thread" - that is, the code executed
@@ -136,18 +150,26 @@ public class ResponsiveInterrupt extends JFrame implements ActionListener {
 			
 			vCanvas.clearRect(0, 0, vWidth, vHeight);
 			
-			try {
-				while (!interrupted()) {
-					int vXord = (int) (Math.abs(vGenerator.nextLong()) % (vWidth - CIRCLE_DIAMETER));
-					int vYord = (int) (Math.abs(vGenerator.nextLong()) % (vHeight - CIRCLE_DIAMETER));
-					vCanvas.drawOval(vXord, vYord, CIRCLE_DIAMETER, CIRCLE_DIAMETER);	
-					sleep(200);
-				}
-			} catch (InterruptedException e) { 
-				// Nothing to do here.
-			};
-				
+			while (mTrucking) {
+				int vXord = (int) (Math.abs(vGenerator.nextLong()) % (vWidth - CIRCLE_DIAMETER));
+				int vYord = (int) (Math.abs(vGenerator.nextLong()) % (vHeight - CIRCLE_DIAMETER));
+				vCanvas.drawOval(vXord, vYord, CIRCLE_DIAMETER, CIRCLE_DIAMETER);	
+				doPause(200);
+			}
+			
 			System.out.println("Exiting a circle drawing thread!");
 		}
 	}
+	/**
+	 * Simple helper method, which pauses execution of our program
+	 * for a specified period of time.
+	 * 
+	 * @param pMilliSeconds length of pause (in milliseconds).
+	 */
+	private void doPause(int pMilliSeconds) {
+		try {
+			Thread.sleep(pMilliSeconds);
+		} catch (InterruptedException e) { }
+	}
+
 }

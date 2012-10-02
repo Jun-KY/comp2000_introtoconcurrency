@@ -4,7 +4,7 @@
  * 
  * COMP229 "Object Oriented Programming Practices"
  * 
- * Copyright (c) 2011 Dominic Verity and Macquarie University.
+ * Copyright (c) 2011-2012 Dominic Verity and Macquarie University.
  * 
  * Wk8Interleaving is free software: you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
