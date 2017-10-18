@@ -1,23 +1,23 @@
 /**
- * This file is part of a project entitled Week8Samples which is
+ * This file is part of a project entitled IntroToConcurrency which is
  * provided as sample code for the following Macquarie University unit of study:
  * 
  * COMP229 "Object Oriented Programming Practices"
  * 
- * Copyright (c) 2011-2012 Dominic Verity and Macquarie University.
+ * Copyright (c) 2011-2017 Dominic Verity and Macquarie University.
  * 
- * Week8Samples is free software: you can redistribute it and/or modify
+ * IntroToConcurrency is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
  * 
- * Week8Samples is distributed in the hope that it will be useful, but
+ * IntroToConcurrency is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
  * for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with Week8Samples. (See files COPYING and COPYING.LESSER.) If
+ * along with IntroToConcurrency. (See files COPYING and COPYING.LESSER.) If
  * not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -45,9 +45,6 @@ public class TickerExample extends JFrame {
 	private JPanel jContentPane = null;
 	private StockTicker mStockTicker = null;
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		mApplication = new TickerExample();
 		
