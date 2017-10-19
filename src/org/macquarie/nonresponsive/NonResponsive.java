@@ -85,7 +85,7 @@ public class NonResponsive extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void setup() {
-		setTitle("Non-Responsive");
+		setTitle("Non-ResponsiveLambda");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		mButton = new JButton("Start");

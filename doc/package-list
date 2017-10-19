@@ -1,6 +1,7 @@
 org.macquarie.head
 org.macquarie.interleaving
 org.macquarie.interrupt
+org.macquarie.lambda
 org.macquarie.nonresponsive
 org.macquarie.responsive
 org.macquarie.ticker.jerky
