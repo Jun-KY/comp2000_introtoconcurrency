@@ -38,8 +38,10 @@ public class Interleaving {
 	 */
 	public static void main(String[] args) {
 		new CounterThread("First Thread").start();
-		new CounterThread("Second Thread").start();
+		Thread b = new CounterThread("Second Thread");
+		b.start();
 		new CounterThread("Third Thread").start();
+
 	}
 
 }
